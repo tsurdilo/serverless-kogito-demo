@@ -1,0 +1,44 @@
+{
+    "id": "customerArrival",
+    "name": "greetCustomer",
+    "version": "1.0",
+    "startsAt": "WaitForCustomer",
+    "events": [{
+            "name": "CustomerArrivesEvent",
+            "source": "arrival",
+            "type": "kafka"
+        },
+        {
+            "name": "CustomerDepartsEvent",
+            "source": "departure",
+            "type": "kafka"
+        }
+    ],
+    "functions": [{
+        "name": "greetFunction",
+        "type": "sysout"
+    }],
+    "states": [{
+        "name": "WaitForCustomer",
+        "type": "EVENT",
+        "onEvent": [{
+            "eventTrigger": "CustomerArrivesEvent",
+            "actionMode": "SEQUENTIAL",
+            "actions": [{
+                "functionref": {
+                    "refname": "greetFunction",
+                    "parameters": {
+                        "message": "\"Hello \" + kcontext.arrivalVar.firstName"
+                    }
+                }
+            }]
+        }],
+        "end": {
+            "type": "MESSAGE",
+            "produce": {
+                "eventName": "CustomerDepartsEvent",
+                "dataRef": "arrivalVar"
+            }
+        }
+    }]
+}

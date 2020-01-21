@@ -1,0 +1,33 @@
+{
+    "id": "testwf",
+    "name": "testworkflow",
+    "version": "1.0",
+    "startsAt": "SayHello",
+    "functions": [{
+        "name": "sysoutfunction",
+        "type": "sysout"
+    }],
+    "states": [{
+        "name": "SayHello",
+        "type": "OPERATION",
+        "actionMode": "SEQUENTIAL",
+        "actions": [{
+            "functionref": {
+                "refname": "sysoutfunction",
+                "parameters": {
+                    "message": "\"Hello2222 \" + workflowdata.name"
+                }
+            }
+        }, {
+            "functionref": {
+                "refname": "sysoutfunction",
+                "parameters": {
+                    "message": "\"Goodbye \" + workflowdata.name"
+                }
+            }
+        }],
+        "end": {
+            "type": "TERMINATE"
+        }
+    }]
+}
