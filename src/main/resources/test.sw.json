@@ -15,7 +15,7 @@
             "functionref": {
                 "refname": "sysoutfunction",
                 "parameters": {
-                    "message": "\"Hello2222 \" + workflowdata.name"
+                    "message": "\"Hello \" + workflowdata.name"
                 }
             }
         }, {

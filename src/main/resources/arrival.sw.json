@@ -21,8 +21,8 @@
     "states": [{
         "name": "WaitForCustomer",
         "type": "EVENT",
-        "onEvent": [{
-            "eventTrigger": "CustomerArrivesEvent",
+        "consume": [{
+            "eventName": "CustomerArrivesEvent",
             "actionMode": "SEQUENTIAL",
             "actions": [{
                 "functionref": {

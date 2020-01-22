@@ -3,42 +3,32 @@
 	"name": "departCustomer",
 	"version": "1.0",
 	"startsAt": "WaitForCustomerToDepart",
-	"events": [
-		{
-			"name": "CustomerDepartsEvent",
-			"source": "farewell",
-			"type": "kafka"
-		}
-	],
-	"functions": [
-		{
-			"name": "departFunction",
-			"type": "sysout"
-		}
-	],
-	"states": [
-		{
-			"name": "WaitForCustomerToDepart",
-			"type": "EVENT",
-			"onEvent": [
-				{
-					"eventTrigger": "CustomerDepartsEvent",
-					"actionMode": "SEQUENTIAL",
-					"actions": [
-						{
-							"functionref": {
-								"refname": "departFunction",
-								"parameters": {
-									"message": "\"Goodbye \" + kcontext.farewellVar.firstName"
-								}
-							}
-						}
-					]
+	"events": [{
+		"name": "CustomerDepartsEvent",
+		"source": "farewell",
+		"type": "kafka"
+	}],
+	"functions": [{
+		"name": "departFunction",
+		"type": "sysout"
+	}],
+	"states": [{
+		"name": "WaitForCustomerToDepart",
+		"type": "EVENT",
+		"consume": [{
+			"eventName": "CustomerDepartsEvent",
+			"actionMode": "SEQUENTIAL",
+			"actions": [{
+				"functionref": {
+					"refname": "departFunction",
+					"parameters": {
+						"message": "\"Goodbye \" + kcontext.farewellVar.firstName"
+					}
 				}
-			],
-			"end": {
-				"type": "TERMINATE"
-			}
+			}]
+		}],
+		"end": {
+			"type": "TERMINATE"
 		}
-	]
+	}]
 }
